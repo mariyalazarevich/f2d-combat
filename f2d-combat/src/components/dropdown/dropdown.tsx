@@ -6,6 +6,7 @@ import {
   useState,
   type KeyboardEvent,
   type ReactNode,
+  type Ref,
 } from 'react';
 import styles from './dropdown.module.css';
 
@@ -23,6 +24,11 @@ interface DropdownProps {
   placeholder?: string;
   required?: boolean;
   emptyText?: string;
+  value?: string;
+  invalid?: boolean;
+  inputRef?: Ref<HTMLInputElement>;
+  onChange?: (value: string) => void;
+  onBlur?: () => void;
 }
 
 function highlightMatch(text: string, query: string): ReactNode {
@@ -60,12 +66,26 @@ export function Dropdown({
   placeholder,
   required = false,
   emptyText = 'Ничего не найдено',
+  value: controlledValue,
+  invalid = false,
+  inputRef,
+  onChange,
+  onBlur,
 }: DropdownProps) {
   const listId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
-  const [value, setValue] = useState('');
+  const [uncontrolledValue, setUncontrolledValue] = useState('');
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const value = controlledValue ?? uncontrolledValue;
+
+  function commitValue(next: string) {
+    if (controlledValue === undefined) {
+      setUncontrolledValue(next);
+    }
+
+    onChange?.(next);
+  }
 
   const visibleOptions = useMemo(() => {
     const query = value.trim().toLowerCase();
@@ -105,7 +125,7 @@ export function Dropdown({
   }, [open, highlightedIndex]);
 
   function selectOption(option: DropdownOption) {
-    setValue(option.value);
+    commitValue(option.value);
     setOpen(false);
   }
 
@@ -150,7 +170,8 @@ export function Dropdown({
   return (
     <div ref={rootRef} className={open ? `${styles.root} ${styles.rootOpen}` : styles.root}>
       <input
-        className={styles.input}
+        ref={inputRef}
+        className={invalid ? `${styles.input} ${styles.inputInvalid}` : styles.input}
         id={id}
         name={name}
         type="text"
@@ -159,12 +180,14 @@ export function Dropdown({
         autoComplete="off"
         required={required}
         value={value}
+        aria-invalid={invalid ? true : undefined}
+        aria-describedby={invalid ? `${id}-error` : undefined}
         aria-expanded={open}
         aria-controls={listId}
         aria-autocomplete="list"
         aria-activedescendant={open ? activeOptionId : undefined}
         onChange={event => {
-          setValue(event.target.value);
+          commitValue(event.target.value);
           setOpen(true);
           setActiveIndex(0);
         }}
@@ -172,7 +195,10 @@ export function Dropdown({
           setOpen(true);
           setActiveIndex(0);
         }}
-        onBlur={() => setOpen(false)}
+        onBlur={() => {
+          setOpen(false);
+          onBlur?.();
+        }}
         onKeyDown={handleKeyDown}
       />
       {open ? (
