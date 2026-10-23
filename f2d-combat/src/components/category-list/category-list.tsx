@@ -10,6 +10,8 @@ import toolsIcon from '../../assets/tools.svg';
 import type { Category } from '../../data/categories';
 import { IconSlot } from '../icon-slot/icon-slot';
 import styles from './category-list.module.css';
+import { setCategorie } from '../../features/categorie/setActiveCategorie';
+import { useDispatch } from 'react-redux';
 
 interface CategoryListProps {
   categories: Category[];
@@ -27,12 +29,14 @@ const categoryIcons: Record<string, string> = {
   tools: toolsIcon,
 };
 
-export function CategoryList({ categories, activeId }: CategoryListProps) {
+export function CategoryList({ categories, activeId}: CategoryListProps) {
   const [selectedId, setSelectedId] = useState(activeId);
+  const dispatch = useDispatch();
 
   function onCategorieClick(event: MouseEvent<HTMLAnchorElement>, categoryId: string) {
     event.preventDefault();
     setSelectedId(categoryId);
+    dispatch(setCategorie(categoryId));
   }
 
   return (

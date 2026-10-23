@@ -1,5 +1,7 @@
 import type { FormEvent } from 'react';
+import { popularProducts } from '../../data/products';
 import { Button } from '../button/button';
+import { Dropdown } from '../dropdown/dropdown';
 import styles from './order-form.module.css';
 
 interface FieldProps {
@@ -13,6 +15,15 @@ interface FieldProps {
   min?: number;
   defaultValue?: string | number;
 }
+
+const articleOptions = popularProducts
+  .filter(product => product.inStock)
+  .map(product => ({
+    id: product.id,
+    value: product.article,
+    label: product.article,
+    description: product.name,
+  }));
 
 function handleSubmit(event: FormEvent<HTMLFormElement>) {
   event.preventDefault();
@@ -86,13 +97,22 @@ export function OrderForm() {
               placeholder="+7 (900) 000-00-00"
               required
             />
-            <Field
-              id="order-product"
-              label="Товар или артикул"
-              name="product"
-              placeholder="Например, OS15CVR"
-              required
-            />
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="order-product">
+                Артикул
+                <span className={styles.star} aria-hidden="true">
+                  *
+                </span>
+              </label>
+              <Dropdown
+                id="order-product"
+                name="product"
+                options={articleOptions}
+                placeholder="Например, OS15CVR"
+                emptyText="Нет подходящих артикулов. Можно оставить введённый."
+                required
+              />
+            </div>
             <Field
               id="order-quantity"
               label="Количество"
