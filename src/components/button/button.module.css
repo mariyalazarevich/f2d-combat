@@ -1,0 +1,20 @@
+.button {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--color-accent);
+  border: 0;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
+}
+
+.button:hover {
+  background: var(--color-accent-hover);
+}

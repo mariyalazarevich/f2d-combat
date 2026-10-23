@@ -1,0 +1,54 @@
+.section {
+  display: grid;
+  gap: 20px;
+  padding: 32px 16px;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kicker {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.text {
+  max-width: 58ch;
+  color: #3d4450;
+}
+
+.photo {
+  min-height: 220px;
+  overflow: hidden;
+  background: var(--color-soft);
+  border-radius: 16px;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 40px;
+    align-items: center;
+    padding: 56px 56px 48px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .photo {
+    min-height: 320px;
+  }
+}

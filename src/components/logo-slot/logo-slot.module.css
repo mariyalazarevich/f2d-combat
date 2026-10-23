@@ -1,0 +1,27 @@
+.slot {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  height: 36px;
+  border: 1px dashed #c5cad3;
+  border-radius: 8px;
+}
+
+.slot[data-variant='light'] {
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.slot:not(:empty) {
+  width: auto;
+  height: auto;
+  border-color: transparent;
+}
+
+.slot :global(img),
+.slot :global(svg) {
+  display: block;
+  width: auto;
+  max-height: 36px;
+}

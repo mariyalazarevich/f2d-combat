@@ -1,0 +1,43 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.link:hover {
+  background: var(--color-soft);
+}
+
+.active {
+  background: var(--color-soft);
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+}
+
+.count {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
