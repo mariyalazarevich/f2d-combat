@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
-import type { Product } from '../../data/products';
 import { setOrderArticle } from '../../features/orderArticle/setOrderArticle';
 import { formatPrice } from '../../utils/format-price';
 import { Button } from '../button/button';
 import { ImageSlot } from '../image-slot/image-slot';
 import styles from './product-card.module.css';
+import type { IProduct } from '../../interfaces/productInterface';
 
 interface ProductCardProps {
-  product: Product;
+  product: IProduct;
 }
 
 function stockLabel(inStock: boolean): string {

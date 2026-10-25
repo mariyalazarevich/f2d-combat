@@ -1,14 +1,12 @@
-import { useMemo, useState, useSyncExternalStore } from 'react';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../app/store';
-import type { Product } from '../../data/products';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../../app/store';
 import { Pagination } from '../pagination/pagination';
 import { ProductCard } from '../product-card/product-card';
 import styles from './product-grid.module.css';
-
-interface ProductGridProps {
-  products: Product[];
-}
+import type { IProduct } from '../../interfaces/productInterface';
+import { EStatus } from '../../enumeration/statusEnum';
+import {getProducts} from '../../features/getProducts/getProducts';
 
 const DESKTOP_MEDIA_QUERY = '(min-width: 1024px)';
 const MOBILE_PAGE_SIZE = 10;
@@ -37,14 +35,32 @@ function scrollToCatalogTitle() {
   document.getElementById('catalog-title')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-export function ProductGrid({ products }: ProductGridProps) {
+export function ProductGrid() {
+  const dispatch = useDispatch<AppDispatch>();
+
   const categorie = useSelector((state: RootState) => state.categorie.categorie);
   const searchQuery = useSelector((state: RootState) => state.searchQuery.searchQuery);
+
   const pageSize = useCatalogPageSize();
+
   const filterKey = `${categorie}\0${searchQuery}`;
+
   const [page, setPage] = useState(1);
   const [seenFilter, setSeenFilter] = useState(filterKey);
-  const filteredProducts = useMemo(() => {
+  
+  const { products, status, error } = useSelector((state: RootState) => state.products);
+
+  useEffect(() => {
+    dispatch(getProducts());
+
+  }, [dispatch]);
+
+  console.log(status);
+
+  if (products.length === 0) {
+    return <p className={styles.empty}>Каталог пока пуст</p>;
+  }
+  const filteredProducts = useMemo(() => {  
     return [...products]
       .filter(product => {
         if (categorie === 'all_categories') {
@@ -62,6 +78,7 @@ export function ProductGrid({ products }: ProductGridProps) {
         );
       });
   }, [products, categorie, searchQuery]);
+
   const pageCount = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
   let visiblePage = page;
 
@@ -92,14 +109,22 @@ export function ProductGrid({ products }: ProductGridProps) {
 
   return (
     <>
-      <ul className={styles.grid}>
-        {visibleProducts.map(product => (
-          <li key={product.id} className={styles.item}>
-            <ProductCard product={product} />
-          </li>
-        ))}
-      </ul>
-      <Pagination page={visiblePage} pageCount={pageCount} onPageChange={handlePageChange} />
+    {status === EStatus.loading && <p className={styles.loading}>Каталог загружается...</p>}
+    {status === EStatus.error && <p className={styles.error}>Во время загрузки каталога произошла ошибка: {error}</p>}
+    {status === EStatus.successfull && 
+      (
+        <>
+        <ul className={styles.grid}>
+          {visibleProducts.map(product => (
+            <li key={product._id} className={styles.item}>
+              <ProductCard product={product as IProduct} />
+            </li>
+          ))}
+        </ul>
+        <Pagination page={visiblePage} pageCount={pageCount} onPageChange={handlePageChange} />
+      </>
+      )
+    }
     </>
   );
 }

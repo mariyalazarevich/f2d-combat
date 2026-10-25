@@ -24,11 +24,6 @@ export function Hero() {
           Перейти в каталог
         </Button>
       </div>
-      <div className={styles.dots} aria-hidden="true">
-        <span className={`${styles.dot} ${styles.dotActive}`} />
-        <span className={styles.dot} />
-        <span className={styles.dot} />
-      </div>
     </section>
   );
 }

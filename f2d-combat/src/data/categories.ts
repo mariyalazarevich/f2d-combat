@@ -1,19 +1,10 @@
-import { popularProducts } from './products';
-
 export interface Category {
   id: string;
   name: string;
-  count: number;
   icon: string;
 }
 
-interface CategoryMeta {
-  id: string;
-  name: string;
-  icon: string;
-}
-
-const categoryMeta: CategoryMeta[] = [
+const categoryMeta: Category[] = [
   { id: 'all_categories', name: 'Все категории', icon: 'categories' },
   { id: 'engine', name: 'Двигатели', icon: 'engine' },
   { id: 'fuel', name: 'Топливо', icon: 'fuel' },
@@ -24,15 +15,4 @@ const categoryMeta: CategoryMeta[] = [
   { id: 'others', name: 'Прочее', icon: 'box' },
 ];
 
-function countProducts(categoryId: string): number {
-  if (categoryId === 'all_categories') {
-    return popularProducts.length;
-  }
-
-  return popularProducts.filter(product => product.category.includes(categoryId)).length;
-}
-
-export const categories: Category[] = categoryMeta.map(category => ({
-  ...category,
-  count: countProducts(category.id),
-}));
+export const categories: Category[] = categoryMeta;

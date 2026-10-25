@@ -8,7 +8,6 @@ const productSchema = mongoose.Schema({
     category: {type: [String]},
     features: {type: String},
     quantity: {type: Number},
-    isActive: {type: Boolean},
     article: {type: String},
 })
 

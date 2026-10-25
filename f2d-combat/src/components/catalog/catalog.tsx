@@ -1,7 +1,6 @@
 import type { ChangeEvent, FormEvent } from 'react';
 import searchIcon from '../../assets/search.svg';
 import { categories } from '../../data/categories';
-import { popularProducts } from '../../data/products';
 import { CategoryList } from '../category-list/category-list';
 import { ProductGrid } from '../product-grid/product-grid';
 import styles from './catalog.module.css';
@@ -43,7 +42,7 @@ export function Catalog() {
             onChange={handleSearchChange}
           />
         </form>
-        <ProductGrid products={popularProducts} />
+        <ProductGrid />
       </div>
     </section>
   );
