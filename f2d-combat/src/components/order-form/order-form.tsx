@@ -139,7 +139,7 @@ export function OrderForm() {
   });
 
   return (
-    <section className={styles.section} aria-labelledby="order-title">
+    <section className={styles.section} id="order" aria-labelledby="order-title">
       <div className={styles.panel}>
         <div className={styles.intro}>
           <p className={styles.kicker}>Заявка</p>

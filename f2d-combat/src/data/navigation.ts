@@ -22,6 +22,7 @@ export interface SocialLink {
 export const navItems: NavItem[] = [
   { id: 'about', label: 'О нас', href: '#about' },
   { id: 'catalog', label: 'Каталог', href: '#catalog' },
+  { id: 'order', label: 'Оформить заказ', href: '#order' },
 ];
 
 export const contacts: ContactItem[] = [
