@@ -1,46 +1,28 @@
-import { useState, type MouseEvent } from 'react';
-import allCategoriesIcon from '../../assets/all_categories.svg';
-import bearingIcon from '../../assets/bearing.svg';
-import chassisIcon from '../../assets/chassis.svg';
-import electronicsIcon from '../../assets/electronics.svg';
-import engineIcon from '../../assets/engine.svg';
-import fuelIcon from '../../assets/fuel.svg';
-import othersIcon from '../../assets/others.svg';
-import toolsIcon from '../../assets/tools.svg';
-import type { Category } from '../../data/categories';
-import { IconSlot } from '../icon-slot/icon-slot';
-import styles from './category-list.module.css';
+import type { MouseEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
+import { categoryIcons } from '../../data/categoryIcons';
+import type { Category } from '../../data/categories';
 import { EStatus } from '../../enumeration/statusEnum';
 import { setCategorie } from '../../features/categorie/setActiveCategorie';
-import { useDispatch, useSelector } from 'react-redux';
+import { IconSlot } from '../icon-slot/icon-slot';
+import styles from './category-list.module.css';
 
 interface CategoryListProps {
   categories: Category[];
-  activeId: string;
+  onSelect?: (categoryId: string) => void;
 }
 
-const categoryIcons: Record<string, string> = {
-  all_categories: allCategoriesIcon,
-  bearing: bearingIcon,
-  chassis: chassisIcon,
-  electronics: electronicsIcon,
-  engine: engineIcon,
-  fuel: fuelIcon,
-  others: othersIcon,
-  tools: toolsIcon,
-};
-
-export function CategoryList({ categories, activeId}: CategoryListProps) {
-  const [selectedId, setSelectedId] = useState(activeId);
+export function CategoryList({ categories, onSelect }: CategoryListProps) {
   const dispatch = useDispatch();
+  const selectedId = useSelector((state: RootState) => state.categorie.categorie);
   const counts = useSelector((state: RootState) => state.categoryCounts.counts);
   const productsStatus = useSelector((state: RootState) => state.products.status);
 
   function onCategorieClick(event: MouseEvent<HTMLAnchorElement>, categoryId: string) {
     event.preventDefault();
-    setSelectedId(categoryId);
     dispatch(setCategorie(categoryId));
+    onSelect?.(categoryId);
   }
 
   return (
