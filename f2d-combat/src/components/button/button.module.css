@@ -8,6 +8,7 @@
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
+  text-align: center;
   cursor: pointer;
   background: var(--color-accent);
   border: 0;
@@ -17,4 +18,24 @@
 
 .button:hover {
   background: var(--color-accent-hover);
+}
+
+.compact {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.button:disabled:hover {
+  background: var(--color-accent);
+}
+
+@media (max-width: 320px) {
+  .button {
+    font-size: 13px;
+  }
 }

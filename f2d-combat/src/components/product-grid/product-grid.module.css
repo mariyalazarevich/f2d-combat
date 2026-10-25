@@ -13,6 +13,12 @@
   color: var(--color-text-muted);
 }
 
+@media (max-width: 320px) {
+  .empty {
+    font-size: 13px;
+  }
+}
+
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));

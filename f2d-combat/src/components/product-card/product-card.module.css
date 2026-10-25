@@ -2,7 +2,7 @@
   display: grid;
   grid-template-areas:
     'image content'
-    'image price';
+    'purchase purchase';
   grid-template-columns: 104px minmax(0, 1fr);
   column-gap: 12px;
   row-gap: 6px;
@@ -68,10 +68,27 @@
   border-radius: 50%;
 }
 
+.purchase {
+  grid-area: purchase;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .price {
-  grid-area: price;
   font-size: 18px;
   font-weight: 800;
+}
+
+@media (max-width: 320px) {
+  .title {
+    font-size: 13px;
+  }
+
+  .price {
+    font-size: 15px;
+  }
 }
 
 @media (hover: hover) {
@@ -86,7 +103,7 @@
     grid-template-areas:
       'image'
       'content'
-      'price';
+      'purchase';
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
     row-gap: 12px;
@@ -104,7 +121,7 @@
     align-self: stretch;
   }
 
-  .price {
+  .purchase {
     align-self: end;
   }
 }

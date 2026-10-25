@@ -1,5 +1,8 @@
+import { useDispatch } from 'react-redux';
 import type { Product } from '../../data/products';
+import { setOrderArticle } from '../../features/orderArticle/setOrderArticle';
 import { formatPrice } from '../../utils/format-price';
+import { Button } from '../button/button';
 import { ImageSlot } from '../image-slot/image-slot';
 import styles from './product-card.module.css';
 
@@ -16,7 +19,13 @@ function stockLabel(inStock: boolean): string {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const dispatch = useDispatch();
   const stockClassName = product.inStock ? styles.inStock : styles.outOfStock;
+
+  function handleOrder() {
+    dispatch(setOrderArticle(product.article));
+    document.getElementById('order')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   return (
     <article className={styles.card}>
@@ -28,7 +37,17 @@ export function ProductCard({ product }: ProductCardProps) {
         <p className={styles.article}>Арт. {product.article}</p>
         <p className={stockClassName}>{stockLabel(product.inStock)}</p>
       </div>
-      <p className={styles.price}>{formatPrice(product.price)}</p>
+      <div className={styles.purchase}>
+        <p className={styles.price}>{formatPrice(product.price)}</p>
+        <Button
+          compact
+          disabled={!product.inStock}
+          title={product.inStock ? undefined : 'Нет в наличии'}
+          onClick={handleOrder}
+        >
+          Заказать
+        </Button>
+      </div>
     </article>
   );
 }

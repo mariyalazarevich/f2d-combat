@@ -15,7 +15,11 @@ export function Header() {
 
         <nav className={styles.nav} aria-label="Разделы страницы">
           {navItems.map(item => (
-            <a key={item.id} className={styles.link} href={item.href}>
+            <a
+              key={item.id}
+              className={item.id === 'order' ? `${styles.link} ${styles.linkOrder}` : styles.link}
+              href={item.href}
+            >
               {item.label}
             </a>
           ))}

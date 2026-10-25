@@ -13,11 +13,13 @@ export function Layout({ children }: LayoutProps) {
       <a className="visually-hidden" href="#main">
         К содержанию
       </a>
+      <Header />
       <div className={styles.shell}>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        <main id="main" className={styles.main}>
+          {children}
+        </main>
       </div>
+      <Footer />
     </div>
   );
 }

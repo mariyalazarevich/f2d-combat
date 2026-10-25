@@ -57,6 +57,12 @@
   object-fit: contain;
 }
 
+@media (max-width: 320px) {
+  .title {
+    font-size: 18px;
+  }
+}
+
 @media (min-width: 1024px) {
   .section {
     grid-template-columns: 232px minmax(0, 1fr);

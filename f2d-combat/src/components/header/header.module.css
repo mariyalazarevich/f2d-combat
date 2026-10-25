@@ -1,10 +1,15 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  width: 100%;
   background: var(--color-surface);
+  box-shadow: 0 1px 0 var(--color-border);
 }
 
 .bar {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
   min-height: 64px;
   padding: 10px 16px;
@@ -19,19 +24,26 @@
 .nav {
   display: flex;
   flex: 1;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 8px 14px;
-  align-items: center;
+  align-content: baseline;
   justify-content: flex-end;
   min-width: 0;
   margin-left: auto;
 }
 
 .link {
+  flex-shrink: 0;
   font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
   text-decoration: none;
+}
+
+.linkOrder {
+  flex-shrink: 1;
+  min-width: min-content;
+  white-space: normal;
 }
 
 .link:hover {
@@ -41,9 +53,10 @@
 @media (min-width: 1024px) {
   .bar {
     gap: 28px;
+    width: min(var(--layout-max-width), calc(100% - var(--layout-gutter) * 2));
     min-height: 78px;
     padding: 0 32px;
-    border-radius: 20px 20px 0 0;
+    margin-inline: auto;
   }
 
   .nav {

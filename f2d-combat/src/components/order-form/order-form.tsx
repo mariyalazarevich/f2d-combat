@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Controller, useForm, type UseFormRegisterReturn } from 'react-hook-form';
+import type { RootState } from '../../app/store';
 import { popularProducts } from '../../data/products';
 import { Button } from '../button/button';
 import { Dropdown } from '../dropdown/dropdown';
@@ -122,10 +125,12 @@ function Field({
 }
 
 export function OrderForm() {
+  const { article, requestId } = useSelector((state: RootState) => state.orderArticle);
   const {
     register,
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<OrderFormValues>({
     mode: 'onSubmit',
@@ -137,6 +142,14 @@ export function OrderForm() {
       comment: '',
     },
   });
+
+  useEffect(() => {
+    if (requestId === 0) {
+      return;
+    }
+
+    setValue('product', article, { shouldDirty: true, shouldValidate: true });
+  }, [article, requestId, setValue]);
 
   return (
     <section className={styles.section} id="order" aria-labelledby="order-title">

@@ -5,19 +5,33 @@ interface ButtonProps {
   children: ReactNode;
   href?: string;
   type?: 'button' | 'submit';
+  disabled?: boolean;
+  compact?: boolean;
+  title?: string;
+  onClick?: () => void;
 }
 
-export function Button({ children, href, type = 'button' }: ButtonProps) {
+export function Button({
+  children,
+  href,
+  type = 'button',
+  disabled = false,
+  compact = false,
+  title,
+  onClick,
+}: ButtonProps) {
+  const className = compact ? `${styles.button} ${styles.compact}` : styles.button;
+
   if (href) {
     return (
-      <a className={styles.button} href={href}>
+      <a className={className} href={href}>
         {children}
       </a>
     );
   }
 
   return (
-    <button className={styles.button} type={type}>
+    <button className={className} type={type} disabled={disabled} title={title} onClick={onClick}>
       {children}
     </button>
   );
