@@ -56,7 +56,11 @@ function highlightMatch(text: string, query: string): ReactNode {
 }
 
 function optionMatches(option: DropdownOption, query: string) {
-  return option.value.toLowerCase().includes(query) || option.label.toLowerCase().includes(query);
+  return (
+    option.value.toLowerCase().includes(query) ||
+    option.label.toLowerCase().includes(query) ||
+    (option.description?.toLowerCase().includes(query) ?? false)
+  );
 }
 
 export function Dropdown({
@@ -225,7 +229,9 @@ export function Dropdown({
                 >
                   <span className={styles.optionLabel}>{highlightMatch(option.label, value)}</span>
                   {option.description ? (
-                    <span className={styles.optionDescription}>{option.description}</span>
+                    <span className={styles.optionDescription}>
+                      {highlightMatch(option.description, value)}
+                    </span>
                   ) : null}
                 </button>
               </li>

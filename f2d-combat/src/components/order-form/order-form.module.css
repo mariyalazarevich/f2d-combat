@@ -94,6 +94,14 @@
   color: var(--color-accent);
 }
 
+.success {
+  font-size: 14px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+
 .submit {
   display: flex;
 }

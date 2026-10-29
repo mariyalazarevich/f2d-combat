@@ -52,15 +52,9 @@ export function ProductGrid() {
 
   useEffect(() => {
     dispatch(getProducts());
-
   }, [dispatch]);
 
-  console.log(status);
-
-  if (products.length === 0) {
-    return <p className={styles.empty}>Каталог пока пуст</p>;
-  }
-  const filteredProducts = useMemo(() => {  
+  const filteredProducts = useMemo(() => {
     return [...products]
       .filter(product => {
         if (categorie === 'all_categories') {
@@ -100,6 +94,18 @@ export function ProductGrid() {
     scrollToCatalogTitle();
   }
 
+  if (status === EStatus.idle || status === EStatus.loading) {
+    return <p className={styles.loading}>Каталог загружается...</p>;
+  }
+
+  if (status === EStatus.error) {
+    return <p className={styles.error}>Во время загрузки каталога произошла ошибка: {error}</p>;
+  }
+
+  if (products.length === 0) {
+    return <p className={styles.empty}>Каталог пока пуст</p>;
+  }
+
   if (filteredProducts.length === 0) {
     return <p className={styles.empty}>Товаров по вашему запросу не найдено</p>;
   }
@@ -109,22 +115,14 @@ export function ProductGrid() {
 
   return (
     <>
-    {status === EStatus.loading && <p className={styles.loading}>Каталог загружается...</p>}
-    {status === EStatus.error && <p className={styles.error}>Во время загрузки каталога произошла ошибка: {error}</p>}
-    {status === EStatus.successfull && 
-      (
-        <>
-        <ul className={styles.grid}>
-          {visibleProducts.map(product => (
-            <li key={product._id} className={styles.item}>
-              <ProductCard product={product as IProduct} />
-            </li>
-          ))}
-        </ul>
-        <Pagination page={visiblePage} pageCount={pageCount} onPageChange={handlePageChange} />
-      </>
-      )
-    }
+      <ul className={styles.grid}>
+        {visibleProducts.map(product => (
+          <li key={product._id} className={styles.item}>
+            <ProductCard product={product as IProduct} />
+          </li>
+        ))}
+      </ul>
+      <Pagination page={visiblePage} pageCount={pageCount} onPageChange={handlePageChange} />
     </>
   );
 }

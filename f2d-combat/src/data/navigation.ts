@@ -29,20 +29,18 @@ export const contacts: ContactItem[] = [
   {
     id: 'phone',
     label: 'Телефон',
-    value: '+7 (900) 000-00-00',
-    href: 'tel:+79000000000',
+    value: '+375 (29) 648-88-79',
+    href: 'tel:+375296488879',
     note: 'ежедневно с 9:00 до 18:00 (МСК)',
   },
   {
     id: 'email',
     label: 'Почта',
-    value: 'info@f2d-combat.ru',
-    href: 'mailto:info@f2d-combat.ru',
+    value: 'mr.f2dcombat@mail.ru',
+    href: 'mailto:mr.f2dcombat@mail.ru',
   }
 ];
 
 export const socialLinks: SocialLink[] = [
-  { id: 'telegram', label: 'Telegram', href: '#', icon: 'telegram' },
-  { id: 'youtube', label: 'YouTube', href: '#', icon: 'youtube' },
-  { id: 'vk', label: 'ВКонтакте', href: '#', icon: 'vk' },
+  { id: 'vk', label: 'ВКонтакте', href: 'https://m.vk.ru/f2d_combat', icon: 'vk' },
 ];

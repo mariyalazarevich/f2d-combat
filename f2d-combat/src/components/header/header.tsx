@@ -1,16 +1,14 @@
-import { brandAssets } from '../../data/assets';
+import lightLogo from '../../assets/light_logo_mark.png';
 import { navItems } from '../../data/navigation';
 import { LogoSlot } from '../logo-slot/logo-slot';
 import styles from './header.module.css';
 
 export function Header() {
-  const logo = brandAssets.logo || undefined;
-
   return (
     <header className={styles.header}>
       <div className={styles.bar}>
         <a className={styles.logoLink} href="/" aria-label="F2D Combat, на главную">
-          <LogoSlot src={logo} />
+          <LogoSlot src={lightLogo} />
         </a>
 
         <nav className={styles.nav} aria-label="Разделы страницы">

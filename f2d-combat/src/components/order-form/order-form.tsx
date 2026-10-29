@@ -1,11 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Controller, useForm, type UseFormRegisterReturn } from 'react-hook-form';
 import type { RootState } from '../../app/store';
-import { popularProducts } from '../../data/products';
+import { EStatus } from '../../enumeration/statusEnum';
 import { Button } from '../button/button';
-import { Dropdown } from '../dropdown/dropdown';
+import { Dropdown, type DropdownOption } from '../dropdown/dropdown';
+import { formatProductChoice } from '../../utils/format-product-choice';
 import styles from './order-form.module.css';
+
+interface ProductOption extends DropdownOption {
+  productName: string;
+  article: string;
+}
 
 interface OrderFormValues {
   name: string;
@@ -29,15 +35,6 @@ interface FieldProps {
 
 const namePattern = /^[\p{Script=Latin}\p{Script=Cyrillic}\- ]+$/u;
 
-const articleOptions = popularProducts
-  .filter(product => product.inStock)
-  .map(product => ({
-    id: product.id,
-    value: product.article,
-    label: product.article,
-    description: product.name,
-  }));
-
 function validateName(value: string) {
   const trimmed = value.trim();
   if (!trimmed) {
@@ -57,29 +54,52 @@ function validatePhone(value: string) {
   if (!value.trim()) {
     return 'Введите телефон';
   }
-  if (digits.length < 10 || digits.length > 11) {
-    return 'Введите от 10 до 11 цифр';
+  if (digits.length < 11 || digits.length > 12) {
+    return 'Введите корректный номер телефона';
   }
   return true;
 }
 
-function validateProduct(value: string) {
-  if (!value.trim()) {
+function validateProduct(value: string, options: ProductOption[]) {
+  const trimmed = value.trim();
+  if (!trimmed) {
     return 'Выберите товар';
+  }
+  if (!options.some(option => option.value === trimmed)) {
+    return 'Выберите товар из списка';
   }
   return true;
 }
 function validateQuantity(value: number) {
-  if (value < 1) {
-    return 'Количество должно быть больше 0';
-  }
-  if (!value) {
+  if (!Number.isFinite(value)) {
     return 'Введите количество';
+  }
+  if (!Number.isInteger(value) || value < 1) {
+    return 'Количество должно быть целым числом больше 0';
   }
   return true;
 }
 
-function submitOrder() {}
+async function submitOrder(values: OrderFormValues, product: ProductOption) {
+  const response = await fetch('http://localhost:8000/api/orders/order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({
+      name: values.name.trim(),
+      phone: values.phone.trim(),
+      productName: product.productName,
+      article: product.article,
+      quantity: values.quantity,
+      comment: values.comment.trim(),
+    }),
+  });
+  const data = (await response.json().catch(() => null)) as { errorMessage?: string } | null;
+
+  if (!response.ok) {
+    throw new Error(data?.errorMessage || 'Не удалось отправить заявку');
+  }
+}
 
 function Field({
   id,
@@ -125,13 +145,42 @@ function Field({
 }
 
 export function OrderForm() {
-  const { article, requestId } = useSelector((state: RootState) => state.orderArticle);
+  const { productName, article, requestId } = useSelector((state: RootState) => state.orderArticle);
+  const { products, status: productsStatus } = useSelector((state: RootState) => state.products);
+  const articleOptions = useMemo(
+    () =>
+      products
+        .filter(product => typeof product.article === 'string' && product.article.trim().length > 0)
+        .map(product => {
+          const productArticle = product.article.trim();
+          const name = typeof product.name === 'string' ? product.name.trim() : '';
+
+          return {
+            id: product._id,
+            value: formatProductChoice(name, productArticle),
+            label: name || productArticle,
+            description: productArticle,
+            productName: name || productArticle,
+            article: productArticle,
+          };
+        }),
+    [products]
+  );
+  const productEmptyText =
+    productsStatus === EStatus.idle || productsStatus === EStatus.loading
+      ? 'Каталог загружается...'
+      : productsStatus === EStatus.error
+        ? 'Не удалось загрузить товары'
+        : 'Нет подходящих товаров';
+  const [submitError, setSubmitError] = useState('');
+  const [isSent, setIsSent] = useState(false);
   const {
     register,
     control,
     handleSubmit,
     setValue,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<OrderFormValues>({
     mode: 'onSubmit',
     defaultValues: {
@@ -148,8 +197,11 @@ export function OrderForm() {
       return;
     }
 
-    setValue('product', article, { shouldDirty: true, shouldValidate: true });
-  }, [article, requestId, setValue]);
+    setValue('product', formatProductChoice(productName, article), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }, [article, productName, requestId, setValue]);
 
   return (
     <section className={styles.section} id="order" aria-labelledby="order-title">
@@ -163,7 +215,28 @@ export function OrderForm() {
             Укажите товар или артикул — мы свяжемся с вами и подтвердим наличие.
           </p>
         </div>
-        <form className={styles.form} noValidate onSubmit={handleSubmit(submitOrder)}>
+        <form
+          className={styles.form}
+          noValidate
+          onSubmit={handleSubmit(async values => {
+            setSubmitError('');
+            setIsSent(false);
+
+            const selected = articleOptions.find(option => option.value === values.product.trim());
+            if (!selected) {
+              setSubmitError('Выберите товар из списка');
+              return;
+            }
+
+            try {
+              await submitOrder(values, selected);
+              setIsSent(true);
+              reset();
+            } catch (error) {
+              setSubmitError(error instanceof Error ? error.message : 'Не удалось отправить заявку');
+            }
+          })}
+        >
           <div className={styles.grid}>
             <Field
               id="order-name"
@@ -181,12 +254,12 @@ export function OrderForm() {
               error={errors.phone?.message}
               type="tel"
               autoComplete="tel"
-              placeholder="+7 (900) 000-00-00"
+              placeholder="+375 (XX) XXX-XX-XX"
               required
             />
             <div className={styles.field}>
               <label className={styles.label} htmlFor="order-product">
-                Артикул
+                Товар
                 <span className={styles.star} aria-hidden="true">
                   *
                 </span>
@@ -194,7 +267,7 @@ export function OrderForm() {
               <Controller
                 name="product"
                 control={control}
-                rules={{ validate: validateProduct }}
+                rules={{ validate: value => validateProduct(value, articleOptions) }}
                 render={({ field }) => (
                   <Dropdown
                     id="order-product"
@@ -205,8 +278,8 @@ export function OrderForm() {
                     onBlur={field.onBlur}
                     options={articleOptions}
                     invalid={Boolean(errors.product)}
-                    placeholder="Например, OS15CVR"
-                    emptyText="Нет подходящих артикулов. Можно оставить введённый."
+                    placeholder="Название или артикул"
+                    emptyText={productEmptyText}
                   />
                 )}
               />
@@ -236,8 +309,20 @@ export function OrderForm() {
               />
             </label>
           </div>
+          {submitError ? (
+            <p className={styles.error} role="alert">
+              {submitError}
+            </p>
+          ) : null}
+          {isSent ? (
+            <p className={styles.success} role="status">
+              Заявка отправлена. Мы свяжемся с вами.
+            </p>
+          ) : null}
           <div className={styles.submit}>
-            <Button type="submit">Отправить заявку</Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Отправляем...' : 'Отправить заявку'}
+            </Button>
           </div>
         </form>
       </div>

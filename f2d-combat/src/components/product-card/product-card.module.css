@@ -15,12 +15,81 @@
 }
 
 .image {
+  position: relative;
   grid-area: image;
   width: 104px;
-  height: 104px;
+  aspect-ratio: 1 / 1.1;
   overflow: hidden;
   background: var(--color-soft);
   border-radius: 10px;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  color: #fff;
+  cursor: pointer;
+  background: rgba(21, 24, 30, 0.38);
+  border: 0;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.arrow:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.arrowPrev {
+  left: 4px;
+}
+
+.arrowNext {
+  right: 4px;
+}
+
+.dots {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  z-index: 1;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+.dot {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
+
+.dot::before {
+  width: 6px;
+  height: 6px;
+  content: '';
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(21, 24, 30, 0.35);
+}
+
+.dotCurrent::before {
+  background: rgba(255, 255, 255, 0.95);
+  transform: scale(1.35);
 }
 
 .content {
@@ -42,43 +111,24 @@
   color: var(--color-text-muted);
 }
 
-.inStock,
-.outOfStock {
-  display: inline-flex;
-  gap: 6px;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.inStock {
-  color: var(--color-success);
-}
-
-.outOfStock {
-  color: var(--color-danger);
-}
-
-.inStock::before,
-.outOfStock::before {
-  width: 6px;
-  height: 6px;
-  content: '';
-  background: currentcolor;
-  border-radius: 50%;
-}
-
 .purchase {
   grid-area: purchase;
   display: flex;
+  flex-direction: column;
   gap: 8px;
-  align-items: center;
-  justify-content: space-between;
+  align-items: stretch;
+  justify-content: flex-end;
 }
 
-.price {
-  font-size: 18px;
-  font-weight: 800;
+.priceNote {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--color-text-muted);
+}
+
+.purchase button {
+  width: 100%;
 }
 
 @media (max-width: 320px) {
@@ -86,8 +136,8 @@
     font-size: 13px;
   }
 
-  .price {
-    font-size: 15px;
+  .priceNote {
+    font-size: 12px;
   }
 }
 
@@ -95,6 +145,10 @@
   .card:hover {
     border-color: #d6dae1;
     box-shadow: 0 8px 24px rgba(20, 28, 40, 0.06);
+  }
+
+  .arrow:hover:not(:disabled) {
+    background: rgba(21, 24, 30, 0.58);
   }
 }
 
@@ -113,8 +167,30 @@
 
   .image {
     width: 100%;
-    height: auto;
-    aspect-ratio: 1.15;
+    aspect-ratio: 1 / 1.1;
+  }
+
+  .arrow {
+    width: 28px;
+    height: 28px;
+  }
+
+  .arrowPrev {
+    left: 8px;
+  }
+
+  .arrowNext {
+    right: 8px;
+  }
+
+  .dots {
+    bottom: 6px;
+    gap: 4px;
+  }
+
+  .dot::before {
+    width: 7px;
+    height: 7px;
   }
 
   .content {
