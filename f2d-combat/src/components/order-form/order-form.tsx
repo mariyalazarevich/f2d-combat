@@ -81,7 +81,7 @@ function validateQuantity(value: number) {
 }
 
 async function submitOrder(values: OrderFormValues, product: ProductOption) {
-  const response = await fetch('http://localhost:8000/api/orders/order', {
+  const response = await fetch('/api/orders/order', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',

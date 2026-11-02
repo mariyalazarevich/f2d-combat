@@ -1,4 +1,4 @@
-import lightLogo from '../../assets/light_logo_mark.png';
+import lightLogo from '../../assets/light_logo1.png';
 import { navItems } from '../../data/navigation';
 import { LogoSlot } from '../logo-slot/logo-slot';
 import styles from './header.module.css';

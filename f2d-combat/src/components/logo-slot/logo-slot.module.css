@@ -23,5 +23,6 @@
 .slot :global(svg) {
   display: block;
   width: auto;
-  max-height: 36px;
+  max-width: 100%;
+  height: auto;
 }

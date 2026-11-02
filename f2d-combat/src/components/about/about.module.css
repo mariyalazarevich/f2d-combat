@@ -30,10 +30,15 @@
 }
 
 .photo {
-  min-height: 220px;
+  height: 220px;
   overflow: hidden;
   background: var(--color-soft);
   border-radius: 16px;
+}
+
+.photo :global(img) {
+  object-fit: cover;
+  object-position: center;
 }
 
 @media (max-width: 320px) {
@@ -55,6 +60,8 @@
   }
 
   .photo {
+    height: auto;
     min-height: 320px;
+    align-self: stretch;
   }
 }

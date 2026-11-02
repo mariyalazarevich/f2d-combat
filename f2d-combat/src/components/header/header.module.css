@@ -26,8 +26,8 @@
   display: block;
   width: auto;
   height: auto;
-  max-height: 18px;
-  max-width: min(168px, 42vw);
+  max-height: 56px;
+  max-width: min(180px, 58vw);
 }
 
 .nav {
@@ -71,8 +71,8 @@
   }
 
   .logoLink img {
-    max-height: 20px;
-    max-width: 200px;
+    max-height: 64px;
+    max-width: 210px;
   }
 
   .nav {
@@ -90,8 +90,8 @@
   .bar {
     gap: 28px;
     width: min(var(--layout-max-width), calc(100% - var(--layout-gutter) * 2));
-    min-height: 78px;
-    padding: 0 32px;
+    min-height: 96px;
+    padding: 12px 32px;
     margin-inline: auto;
   }
 
@@ -100,8 +100,8 @@
   }
 
   .logoLink img {
-    max-height: 30px;
-    max-width: 280px;
+    max-height: 72px;
+    max-width: 240px;
   }
 
   .nav {

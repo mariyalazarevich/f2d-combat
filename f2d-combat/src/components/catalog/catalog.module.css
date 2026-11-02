@@ -24,6 +24,7 @@
 
 .categoriesMenu {
   position: relative;
+  display: none;
   flex-shrink: 0;
 }
 
@@ -115,14 +116,15 @@
 
 @media (min-width: 1024px) {
   .section {
-    grid-template-columns: 232px minmax(0, 1fr);
+    /* Sidebar column is unused while category UI stays hidden. */
+    grid-template-columns: minmax(0, 1fr);
     gap: 28px;
     align-items: start;
     padding: 36px 32px 48px;
   }
 
   .sidebar {
-    display: block;
+    display: none;
   }
 
   .categoriesMenu {

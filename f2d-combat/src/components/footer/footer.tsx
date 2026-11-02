@@ -1,4 +1,4 @@
-import darkLogo from '../../assets/dark_logo_mark.png';
+import darkLogo from '../../assets/dark_logo1.png';
 import vkIcon from '../../assets/vk.svg';
 import { contacts, socialLinks } from '../../data/navigation';
 import { IconSlot } from '../icon-slot/icon-slot';
@@ -57,9 +57,9 @@ export function Footer() {
         </div>
         <div className={styles.bottom}>
           <p>© 2025 F2D Combat. Все права защищены.</p>
-          <a className={styles.privacy} href="#">
+         {/*  <a className={styles.privacy} href="#">
             Политика конфиденциальности
-          </a>
+          </a> */}
         </div>
       </div>
     </footer>

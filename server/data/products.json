@@ -1,0 +1,155 @@
+[
+  {
+    "_id": "6ae37be8410ac6d6f9967c85",
+    "name": "Картер",
+    "article": "01",
+    "inStock": true,
+    "image": [
+      "img_01"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c86",
+    "name": "Блок цилиндра",
+    "article": "02",
+    "inStock": true,
+    "image": [
+      "img_02",
+      "img_03"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c87",
+    "name": "Поршневая пара",
+    "article": "03",
+    "inStock": true,
+    "image": [
+      "img_04",
+      "img_05"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c88",
+    "name": "Коленчатый вал",
+    "article": "04",
+    "inStock": true,
+    "image": [
+      "img_06"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c89",
+    "name": "Камера сгорания STD",
+    "article": "05",
+    "inStock": true,
+    "image": [
+      "img_07"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c8a",
+    "name": "Свеча калильная",
+    "article": "06",
+    "inStock": true,
+    "image": [
+      "img_08"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c8b",
+    "name": "Комплект подшипников",
+    "article": "07",
+    "inStock": true,
+    "image": [
+      "img_09",
+      "img_10"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c8c",
+    "name": "Комплект «Sport» (головка блока, камера сгорания, прокладки 0,05, 0,1, 0,2)",
+    "article": "08",
+    "inStock": true,
+    "image": [
+      "img_11"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c8d",
+    "name": "Комплект прокладок ( 0,05, 0,1, 0,2 )",
+    "article": "09",
+    "inStock": true,
+    "image": [
+      "img_12"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c8e",
+    "name": "Задняя крышка",
+    "article": "10",
+    "inStock": true,
+    "image": [
+      "img_13",
+      "img_14"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c8f",
+    "name": "Диффузор",
+    "article": "11",
+    "inStock": true,
+    "image": [
+      "img_15",
+      "img_16"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c90",
+    "name": "Адаптер глушителя",
+    "article": "12",
+    "inStock": true,
+    "image": [
+      "img_17",
+      "img_18"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c91",
+    "name": "Глушитель STD с уплотнителем",
+    "article": "13",
+    "inStock": true,
+    "image": [
+      "img_19",
+      "img_20"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c92",
+    "name": "Комплект жиклера (жиклер, игла, гайка)",
+    "article": "14",
+    "inStock": true,
+    "image": [
+      "img_21"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c93",
+    "name": "Комплект опорной шайбы (Шайба упорная, конус, кок под ключ 10)",
+    "article": "15",
+    "inStock": true,
+    "image": [
+      "img_22"
+    ]
+  },
+  {
+    "_id": "6ae37be8410ac6d6f9967c94",
+    "name": "Двигатель «AirJet 2,5k» в сборе",
+    "article": "16",
+    "inStock": true,
+    "image": [
+      "img_23",
+      "img_24",
+      "img_25"
+    ]
+  }
+]

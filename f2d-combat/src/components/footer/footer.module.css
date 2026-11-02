@@ -37,7 +37,7 @@
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 22px;
+  max-height: 84px;
 }
 
 .tagline {
@@ -118,8 +118,8 @@
   }
 
   .logoLink img {
-    max-height: 28px;
-    max-width: 260px;
+    max-height: 96px;
+    max-width: 280px;
   }
 
   .contacts {

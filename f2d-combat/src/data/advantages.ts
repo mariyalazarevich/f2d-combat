@@ -7,6 +7,6 @@ export interface Advantage {
 export const advantages: Advantage[] = [
   { id: 'originality', title: 'Оригинальные комплектующие', icon: 'parts' },
   { id: 'quality', title: 'Проверенное качество', icon: 'shield' },
-  { id: 'delivery', title: 'Быстрая отправка по всей России', icon: 'truck' },
-  { id: 'support', title: 'Поддержка пилотов', icon: 'headset' },
+  { id: 'delivery', title: 'Отправка по Беларуси и России', icon: 'truck' },
+  { id: 'support', title: 'Активное сообщество', icon: 'headset' },
 ];

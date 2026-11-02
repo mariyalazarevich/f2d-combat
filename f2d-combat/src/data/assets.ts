@@ -1,3 +1,5 @@
+import mainPhoto from '../assets/main_photo1.jpeg';
+
 export interface BrandAssets {
   logo: string;
   hero: string;
@@ -7,5 +9,5 @@ export interface BrandAssets {
 export const brandAssets: BrandAssets = {
   logo: '',
   hero: '',
-  about: '',
+  about: mainPhoto,
 };

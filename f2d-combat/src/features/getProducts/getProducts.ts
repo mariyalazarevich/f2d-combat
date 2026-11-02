@@ -17,7 +17,7 @@ const initialState: ProductsState = {
 };
 
 export const getProducts = createAsyncThunk('products/getProducts', async () => {
-  const response = await axios.get('http://localhost:8000/api/products/products', {
+  const response = await axios.get('/api/products/products', {
     withCredentials: true,
   });
   return response.data;
